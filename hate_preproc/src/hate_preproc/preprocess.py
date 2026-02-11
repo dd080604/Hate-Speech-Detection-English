@@ -26,6 +26,7 @@ class PreprocessConfig:
     remove_emojis: bool = False          # set True if emojis are mostly noise
     remove_numbers: bool = False         # set True if numbers are unhelpful
     remove_punctuation: bool = False     # often False for hate speech, punctuation can be informative
+    keep_apostrophes: bool = False
     collapse_repeated_chars: bool = True # "soooo" -> "soo"
     normalize_quotes: bool = True
     random_state: int = 42
