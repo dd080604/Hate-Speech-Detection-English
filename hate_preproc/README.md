@@ -51,4 +51,15 @@ df_signals.head()
 <img width="1355" height="347" alt="output-onlinepngtools" src="https://github.com/user-attachments/assets/c5086266-35c3-4f43-a568-d010e8a326c8" />
 
 
+Signal means by hate speech label (0/1):
+```python
+signal_cols = ["char_len","word_len", "shout_ratio", "punct_count","url_count",
+               "handle_count", "hashtag_count","emoji_count", "profanity_hits",
+               "negation_hits"]
+signal_means = df_sig.groupby('label')[signal_cols].mean()
+signal_means
+```
+<img width="281" height="343" alt="image" src="https://github.com/user-attachments/assets/18358044-0c17-4613-86dc-d3ba1ad96319" />
+
+
 
