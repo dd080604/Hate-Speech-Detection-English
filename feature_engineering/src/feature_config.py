@@ -16,7 +16,7 @@ FEATURE_CONFIG = {
 
     "use_word_features": True,
     "tfidf": True,
-    "bigrams": False,
+    "bigrams": True,
     "binary_cts": False,
 
     #vocab settings
