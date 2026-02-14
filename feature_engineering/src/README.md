@@ -1,5 +1,5 @@
 
-## Code on how to load Features for Model Training 
+### How to load Features for Model Training:
 
 ```python
 import numpy as np
@@ -18,5 +18,8 @@ y_val = np.load("artifacts/y_val.npy")
 print("Loaded shapes:")
 print(X_train.shape, y_train.shape)
 print(X_val.shape, y_val.shape)
-
+```
+### Run this in the terminal to get the 'artifacts\X_train' file: 
+```python
+python -m feature_engineering.src.build_features
 ```
