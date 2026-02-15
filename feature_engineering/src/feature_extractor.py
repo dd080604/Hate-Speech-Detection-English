@@ -4,7 +4,7 @@ import numpy as np
 from collections import Counter
 
 from .feature_config import FEATURE_CONFIG
-from hate_preproc.src.hate_preproc.preprocess import normalize_text
+from hate_preproc.preprocess import normalize_text
 
 
 class FeatureExtractor:
@@ -16,7 +16,7 @@ class FeatureExtractor:
         self.vocab_size = 0
 
         self.numeric_means = None
-        self.numeric_std = None
+        self.numeric_stds = None
         self.numeric_dim = 0
 
     def fit(self, df):
@@ -120,8 +120,13 @@ class FeatureExtractor:
         eps = self.config["epsilon"]
 
         for txt in texts:
-            for w in set(txt.split()):
-                idx = self.word_vocab.get(w)
+            words = txt.split()
+            tokens = set(words)
+            if self.config["bigrams"]:
+                tokens.update(self.get_bigrams(words))
+
+            for tok in tokens:
+                idx = self.word_vocab.get(tok)
                 if idx is not None:
                     counts[idx] += 1
 
@@ -140,7 +145,7 @@ class FeatureExtractor:
 
         for token in tokens:
             idx = self.word_vocab.get(token)
-            if idx is not None:
+            if idx is None:
                 continue
             if self.config["binary_cts"]:
                 vec[idx] = 1
@@ -151,6 +156,8 @@ class FeatureExtractor:
             denominator = vec.sum() + self.config["epsilon"]
             tf = vec / denominator
             vec = tf * self.idf
+            norm = np.linalg.norm(vec) + self.config["epsilon"]
+            vec = vec / norm
 
         return vec
 

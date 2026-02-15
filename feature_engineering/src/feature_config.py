@@ -1,5 +1,10 @@
 
 FEATURE_CONFIG = {
+    "feature_set_name": "word12",
+
+    "val_size": 0.2,
+    "split_seed": 42,
+
     "numeric_feature_cols": [
         "char_len",
         "word_len",
