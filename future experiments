@@ -1,0 +1,32 @@
+Linear SVM
+* tune the model 
+* add a learning rate schedule 
+* add early stopping on val F1
+
+Feature Engineering 
+* char n-grams: try 2-5, 3-6, 4-6
+* word n-grams: try 1-3
+
+TF-IDF variants
+* sublinear TF
+* no L2 normalization vs L2 normalization
+* IDF smoothing tweak (log((N+1)/(df+1)) without the + 1 )
+* binary counts
+
+Vocabulary filtering 
+* increase min_char_freq from 5 -> 10 or 20 
+* increase min_word_freq from 3 -> 5 or 10
+* add max_char_vocab_size cap (50K / 100K)
+
+Preprocessing
+* all lowercase vs preserve case
+* repeated characters: try clipping to 2 instead of 3, and try unnormalized
+* keep @handles as a token instead of removing
+* keep URLs
+* keep emojis as EMOJI or normalized categories (i think we already do)
+
+Ensembling
+* use linear, NB, and logistic scores into final logistic regression 
+
+Error analysis loop 
+* look at false negatives and false positives, group by pattern 
