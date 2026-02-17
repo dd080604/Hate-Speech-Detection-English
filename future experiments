@@ -12,6 +12,7 @@ TF-IDF variants
 * no L2 normalization vs L2 normalization
 * IDF smoothing tweak (log((N+1)/(df+1)) without the + 1 )
 * binary counts
+* prune by informitiveness (chi-square feature selection) 
 
 Vocabulary filtering 
 * increase min_char_freq from 5 -> 10 or 20 
