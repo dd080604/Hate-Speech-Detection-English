@@ -1,5 +1,3 @@
-from idlelib.squeezer import count_lines_with_wrapping
-
 import numpy as np
 from collections import Counter
 
@@ -38,11 +36,11 @@ class FeatureExtractor:
 
             if self.config["normalize_features"]:
                 self.numeric_means = X_num.mean(axis=0)
-                self.numeric_stds = X_num.std(axis=0)
-                self.numeric_stds = np.where(self.numeric_stds == 0, 1.0, self.numeric_stds)
+                self.numeric_std = X_num.std(axis=0)
+                self.numeric_std = np.where(self.numeric_std == 0, 1.0, self.numeric_std)
             else:
                 self.numeric_means = None
-                self.numeric_stds = None
+                self.numeric_std = None
 
         if self.config["verbose_features"]:
             total_dim = self.vocab_size + self.numeric_dim
@@ -62,7 +60,7 @@ class FeatureExtractor:
         if num_cols:
                 X_num = df[num_cols].fillna(0).to_numpy(dtype=float)
                 if self.config["normalize_features"]:
-                    X_num = (X_num - self.numeric_means) / self.numeric_stds
+                    X_num = (X_num - self.numeric_means) / self.numeric_std
         else:
             X_num = np.zeros((len(texts), 0), dtype=float)
 
@@ -120,8 +118,13 @@ class FeatureExtractor:
         eps = self.config["epsilon"]
 
         for txt in texts:
-            for w in set(txt.split()):
-                idx = self.word_vocab.get(w)
+            words = txt.split()
+            tokens = list(words)
+            if self.config["bigrams"]:
+                tokens.extend(self.get_bigrams(words))
+
+            for tok in set(tokens):
+                idx = self.word_vocab.get(tok)
                 if idx is not None:
                     counts[idx] += 1
 
@@ -140,7 +143,8 @@ class FeatureExtractor:
 
         for token in tokens:
             idx = self.word_vocab.get(token)
-            if idx is not None:
+            ### bugfix is NOT --> is None
+            if idx is None:
                 continue
             if self.config["binary_cts"]:
                 vec[idx] = 1

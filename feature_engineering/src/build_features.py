@@ -41,14 +41,9 @@ y_train = train_df["label"].to_numpy()
 print("X_train Shape:", X_train.shape)
 #print("X_val shape:", X_val.shape)
 
+#print("word_vocab/n", sorted(fe.word_vocab.items(), key=lambda x: x[1], reverse=True)[0:21])
+
 import numpy as np
-#print("NaNs train:", np.isnan(X_train).sum(), "Infs train:", np.isinf(X_train).sum())
-#print("Nans val:" !! complete
-
-## ## ### check bigrams ### ## ##
-##print(len([tok for tok in fe.word_vocab.keys() if "_" in tok]))
-##print([tok for tok in fe.word_vocab.keys() if "_" in tok][:16])
-
 ### ================================
 ### ### Save feature extractor
 
